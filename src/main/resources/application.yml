@@ -1,0 +1,11 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus"
+  metrics:
+    enable:
+      jvm: true
+spring:
+  application:
+    name: demo-heap-monitor
