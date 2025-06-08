@@ -17,4 +17,4 @@ spec:
         metricName: http_server_requests_seconds_count
         query: |
           rate(http_server_requests_seconds_count{uri="/api/hello"}[1m])
-        threshold: "2000"
+        threshold: "1000"
