@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: demo-app-tps-scaler
+  namespace: heap-test
+spec:
+  scaleTargetRef:
+    name: demo-app
+  minReplicaCount: 1
+  maxReplicaCount: 3
+  cooldownPeriod: 60  # segundos después de bajar carga para reducir replicas
+  pollingInterval: 15 # segundos entre chequeos de métricas
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus.heap-test.svc.cluster.local:9090
+        metricName: http_server_requests_seconds_count
+        query: |
+          rate(http_server_requests_seconds_count{uri="/api/hello"}[1m])
+        threshold: "2000"
